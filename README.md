@@ -135,4 +135,4 @@ Generates markdown reports from genuine execution evidence:
 ---
 
 ## 8. Git Commit Reference
-- Current HEAD Commit: `initial-commit` (or inspect via `git rev-parse --short HEAD`).
+- Current HEAD Commit: `bb62fd0` (inspect via `git rev-parse --short HEAD`).

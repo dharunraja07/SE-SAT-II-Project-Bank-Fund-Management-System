@@ -7,10 +7,10 @@
     "precondition": "Source A101 active (Rs.25,000), Beneficiary A102 active (Rs.8,000)",
     "input": "{\"beneficiaryAccountId\":\"A102\",\"amount\":500,\"idempotencyKey\":\"idemp-t1-key\"}",
     "expected": "First call creates INITIATED txn; second call with same idempotency returns existing; second open call with same amount/beneficiary rejected with 409 DUPLICATE",
-    "actual": "First call returned ref TXN-20261010-BA3240; replay returned existing record; duplicate open request returned 409 DUPLICATE",
+    "actual": "First call returned ref TXN-20261010-113495; replay returned existing record; duplicate open request returned 409 DUPLICATE",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:23.385Z",
-    "durationMs": 482
+    "startedAt": "2026-10-10T08:54:38.681Z",
+    "durationMs": 493
   },
   {
     "id": "T2",
@@ -22,8 +22,8 @@
     "expected": "Only 100 and 20000 accepted; 0, 20001, 100.5, -50, \"abc\" rejected with 400 VALIDATION_ERROR",
     "actual": "100 and 20000 accepted (status 200); 0, 20001, 100.5, -50, \"abc\" rejected with HTTP 400 VALIDATION_ERROR",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:23.867Z",
-    "durationMs": 407
+    "startedAt": "2026-10-10T08:54:39.174Z",
+    "durationMs": 397
   },
   {
     "id": "T3",
@@ -35,8 +35,8 @@
     "expected": "Both requests rejected with 400 INELIGIBLE; balances and transactions unchanged",
     "actual": "Both rejected with HTTP 400 INELIGIBLE; balances unchanged at A101:25000, A102:8000, A103:12000",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:24.274Z",
-    "durationMs": 479
+    "startedAt": "2026-10-10T08:54:39.571Z",
+    "durationMs": 477
   },
   {
     "id": "T4",
@@ -48,8 +48,8 @@
     "expected": "Charges: 10 / 0 / 0; Total debits: 1009 / 1000 / 1001",
     "actual": "999 -> charge=10, total=1009; 1000 -> charge=0, total=1000; 1001 -> charge=0, total=1001",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:24.753Z",
-    "durationMs": 350
+    "startedAt": "2026-10-10T08:54:40.048Z",
+    "durationMs": 367
   },
   {
     "id": "T5",
@@ -59,10 +59,10 @@
     "precondition": "A101 balance Rs.25000, A102 balance Rs.8000",
     "input": "{\"from\":\"A101\",\"to\":\"A102\",\"amount\":1500}",
     "expected": "SUCCESS row created, reference generated, A101 balance 23500, A102 balance 9500, history logged",
-    "actual": "Txn TXN-20261010-D6EA7D status SUCCESS. A101 debited to 23500 (-1500), A102 credited to 9500 (+1500). 3 audit history rows recorded.",
+    "actual": "Txn TXN-20261010-1A6F8B status SUCCESS. A101 debited to 23500 (-1500), A102 credited to 9500 (+1500). 3 audit history rows recorded.",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:25.103Z",
-    "durationMs": 461
+    "startedAt": "2026-10-10T08:54:40.416Z",
+    "durationMs": 469
   },
   {
     "id": "T6",
@@ -74,8 +74,8 @@
     "expected": "HTTP 400 on blank/short PIN; 3 wrong PINs locks session (HTTP 423 SESSION_LOCKED); subsequent correct PIN rejected; no balance change",
     "actual": "3 wrong PINs locked session with HTTP 423 SESSION_LOCKED; subsequent correct PIN rejected with HTTP 423",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:25.564Z",
-    "durationMs": 495
+    "startedAt": "2026-10-10T08:54:40.885Z",
+    "durationMs": 550
   },
   {
     "id": "T7",
@@ -87,8 +87,8 @@
     "expected": "Complete rejected with 400 INELIGIBLE; status marked FAILED; no balance deducted",
     "actual": "Transaction transitioned to FAILED (reason: Source balance insufficient at commit: balance is Rs.100, required Rs.1500.); source balance stayed 100 with zero deduction",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:26.059Z",
-    "durationMs": 1179
+    "startedAt": "2026-10-10T08:54:41.435Z",
+    "durationMs": 475
   },
   {
     "id": "T8",
@@ -100,8 +100,8 @@
     "expected": "HTTP 403 FORBIDDEN on all unauthorized cross-tenant/admin calls",
     "actual": "All unauthorized actions returned HTTP 403 FORBIDDEN with zero state modification",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:27.238Z",
-    "durationMs": 1142
+    "startedAt": "2026-10-10T08:54:41.910Z",
+    "durationMs": 454
   },
   {
     "id": "T9",
@@ -113,8 +113,8 @@
     "expected": "All illegal transitions rejected with 409 INVALID_STATUS_ACTION; customer complete-before-authorise fails",
     "actual": "Complete-before-authorise rejected with 409; Admin INITIATED->SUCCESS rejected with 409 INVALID_STATUS_ACTION",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:28.380Z",
-    "durationMs": 456
+    "startedAt": "2026-10-10T08:54:42.364Z",
+    "durationMs": 487
   },
   {
     "id": "T10",
@@ -126,8 +126,8 @@
     "expected": "1st reversal refunds Rs.510 to A101, deducts Rs.500 from A102; 2nd reversal rejected 409 with zero balance change",
     "actual": "1st reversal restored A101 to 25000 and A102 to 8000; 2nd reversal rejected with HTTP 409 INVALID_STATUS_ACTION",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:28.836Z",
-    "durationMs": 413
+    "startedAt": "2026-10-10T08:54:42.852Z",
+    "durationMs": 482
   },
   {
     "id": "T11",
@@ -137,10 +137,10 @@
     "precondition": "Child process running on test DB; transaction completed",
     "input": "Kill process; spawn new process on same DB; query record & balances",
     "expected": "Transaction status SUCCESS, balances 23500 and 9500 persist identically across process restarts",
-    "actual": "Server restarted on D:\\SE SAT II\\backend\\data\\restart-test.db; verified txn TXN-20261010-C7CAAF is SUCCESS, A101 balance persists at 23500",
+    "actual": "Server restarted on D:\\SE SAT II\\backend\\data\\restart-test.db; verified txn TXN-20261010-2EB593 is SUCCESS, A101 balance persists at 23500",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:29.249Z",
-    "durationMs": 2758
+    "startedAt": "2026-10-10T08:54:43.334Z",
+    "durationMs": 2595
   },
   {
     "id": "T12",
@@ -152,8 +152,8 @@
     "expected": "Original transaction fields (charge=10, snapshot name, rule snapshot) remain completely unaffected",
     "actual": "Transaction snapshot retained original charge (10), snapshot name (\"Sample Customer 2\"), and rule snapshot regardless of master modifications",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:32.007Z",
-    "durationMs": 1577
+    "startedAt": "2026-10-10T08:54:45.930Z",
+    "durationMs": 492
   },
   {
     "id": "E1",
@@ -165,8 +165,8 @@
     "expected": "Full atomic rollback: balances and transaction state unchanged",
     "actual": "Fault injection triggered clean rollback: A101 balance remained intact at 25000",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:33.584Z",
-    "durationMs": 968
+    "startedAt": "2026-10-10T08:54:46.423Z",
+    "durationMs": 273
   },
   {
     "id": "E2",
@@ -178,8 +178,8 @@
     "expected": "All non-integer types rejected with 400 VALIDATION_ERROR",
     "actual": "All string/null/undefined amounts rejected with HTTP 400 VALIDATION_ERROR",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:34.552Z",
-    "durationMs": 1270
+    "startedAt": "2026-10-10T08:54:46.696Z",
+    "durationMs": 356
   },
   {
     "id": "E3",
@@ -191,8 +191,8 @@
     "expected": "Parameterized query safely rejects invalid account with 404 NOT_FOUND",
     "actual": "Parameterized query safely handled injection string, returning HTTP 404 NOT_FOUND",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:35.822Z",
-    "durationMs": 1261
+    "startedAt": "2026-10-10T08:54:47.052Z",
+    "durationMs": 338
   },
   {
     "id": "E4",
@@ -204,7 +204,7 @@
     "expected": "Response contains only C102 transactions, strictly zero of C101",
     "actual": "C102 saw strictly 1 transaction owned by U2; zero leak of U1 records",
     "status": "PASS",
-    "startedAt": "2026-10-10T08:51:37.083Z",
-    "durationMs": 1556
+    "startedAt": "2026-10-10T08:54:47.390Z",
+    "durationMs": 461
   }
 ]

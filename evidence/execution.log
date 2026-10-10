@@ -1,97 +1,97 @@
-[2026-10-10T08:51:23.384Z] Starting SAT II Bank Fund Transfer Test Execution
-[2026-10-10T08:51:23.385Z] 
+[2026-10-10T08:54:38.679Z] Starting SAT II Bank Fund Transfer Test Execution
+[2026-10-10T08:54:38.681Z] 
 =================== RUNNING TEST T1: Duplicate Protection & Idempotency Key ===================
-[2026-10-10T08:51:23.386Z] Linked: FR=[FR1, FR4, FR5], BR=[BR6, BR7]
-[2026-10-10T08:51:23.386Z] Precondition: Source A101 active (Rs.25,000), Beneficiary A102 active (Rs.8,000)
-[2026-10-10T08:51:23.386Z] Input: {"beneficiaryAccountId":"A102","amount":500,"idempotencyKey":"idemp-t1-key"}
-[2026-10-10T08:51:23.866Z] RESULT T1: PASS. Actual: First call returned ref TXN-20261010-BA3240; replay returned existing record; duplicate open request returned 409 DUPLICATE
-[2026-10-10T08:51:23.867Z] 
+[2026-10-10T08:54:38.681Z] Linked: FR=[FR1, FR4, FR5], BR=[BR6, BR7]
+[2026-10-10T08:54:38.681Z] Precondition: Source A101 active (Rs.25,000), Beneficiary A102 active (Rs.8,000)
+[2026-10-10T08:54:38.681Z] Input: {"beneficiaryAccountId":"A102","amount":500,"idempotencyKey":"idemp-t1-key"}
+[2026-10-10T08:54:39.174Z] RESULT T1: PASS. Actual: First call returned ref TXN-20261010-113495; replay returned existing record; duplicate open request returned 409 DUPLICATE
+[2026-10-10T08:54:39.174Z] 
 =================== RUNNING TEST T2: Amount Boundary & Type Validation (BR1) ===================
-[2026-10-10T08:51:23.867Z] Linked: FR=[FR2], BR=[BR1]
-[2026-10-10T08:51:23.867Z] Precondition: Active account A101 logged in
-[2026-10-10T08:51:23.867Z] Input: [0,100,20000,20001,100.5,-50,"abc"]
-[2026-10-10T08:51:24.274Z] RESULT T2: PASS. Actual: 100 and 20000 accepted (status 200); 0, 20001, 100.5, -50, "abc" rejected with HTTP 400 VALIDATION_ERROR
-[2026-10-10T08:51:24.274Z] 
+[2026-10-10T08:54:39.174Z] Linked: FR=[FR2], BR=[BR1]
+[2026-10-10T08:54:39.175Z] Precondition: Active account A101 logged in
+[2026-10-10T08:54:39.175Z] Input: [0,100,20000,20001,100.5,-50,"abc"]
+[2026-10-10T08:54:39.570Z] RESULT T2: PASS. Actual: 100 and 20000 accepted (status 200); 0, 20001, 100.5, -50, "abc" rejected with HTTP 400 VALIDATION_ERROR
+[2026-10-10T08:54:39.571Z] 
 =================== RUNNING TEST T3: Inactive Beneficiary (A103) and Insufficient Balance ===================
-[2026-10-10T08:51:24.274Z] Linked: FR=[FR2], BR=[BR2, BR6]
-[2026-10-10T08:51:24.274Z] Precondition: A103 inactive; A102 has balance Rs.8,000
-[2026-10-10T08:51:24.274Z] Input: "1) C101 sends to inactive A103; 2) C102 sends Rs.9000 to A101"
-[2026-10-10T08:51:24.752Z] RESULT T3: PASS. Actual: Both rejected with HTTP 400 INELIGIBLE; balances unchanged at A101:25000, A102:8000, A103:12000
-[2026-10-10T08:51:24.753Z] 
+[2026-10-10T08:54:39.571Z] Linked: FR=[FR2], BR=[BR2, BR6]
+[2026-10-10T08:54:39.571Z] Precondition: A103 inactive; A102 has balance Rs.8,000
+[2026-10-10T08:54:39.571Z] Input: "1) C101 sends to inactive A103; 2) C102 sends Rs.9000 to A101"
+[2026-10-10T08:54:40.047Z] RESULT T3: PASS. Actual: Both rejected with HTTP 400 INELIGIBLE; balances unchanged at A101:25000, A102:8000, A103:12000
+[2026-10-10T08:54:40.048Z] 
 =================== RUNNING TEST T4: Charge Calculation at Thresholds (999, 1000, 1001) ===================
-[2026-10-10T08:51:24.753Z] Linked: FR=[FR3], BR=[BR4]
-[2026-10-10T08:51:24.753Z] Precondition: Service config: threshold=1000, low_charge=10, high_charge=0
-[2026-10-10T08:51:24.753Z] Input: [999,1000,1001]
-[2026-10-10T08:51:25.103Z] RESULT T4: PASS. Actual: 999 -> charge=10, total=1009; 1000 -> charge=0, total=1000; 1001 -> charge=0, total=1001
-[2026-10-10T08:51:25.103Z] 
+[2026-10-10T08:54:40.048Z] Linked: FR=[FR3], BR=[BR4]
+[2026-10-10T08:54:40.048Z] Precondition: Service config: threshold=1000, low_charge=10, high_charge=0
+[2026-10-10T08:54:40.048Z] Input: [999,1000,1001]
+[2026-10-10T08:54:40.415Z] RESULT T4: PASS. Actual: 999 -> charge=10, total=1009; 1000 -> charge=0, total=1000; 1001 -> charge=0, total=1001
+[2026-10-10T08:54:40.416Z] 
 =================== RUNNING TEST T5: Valid Transaction End-to-End (A101 -> A102, Rs.1500) ===================
-[2026-10-10T08:51:25.103Z] Linked: FR=[FR5], BR=[BR3, BR7]
-[2026-10-10T08:51:25.103Z] Precondition: A101 balance Rs.25000, A102 balance Rs.8000
-[2026-10-10T08:51:25.103Z] Input: {"from":"A101","to":"A102","amount":1500}
-[2026-10-10T08:51:25.563Z] RESULT T5: PASS. Actual: Txn TXN-20261010-D6EA7D status SUCCESS. A101 debited to 23500 (-1500), A102 credited to 9500 (+1500). 3 audit history rows recorded.
-[2026-10-10T08:51:25.564Z] 
+[2026-10-10T08:54:40.416Z] Linked: FR=[FR5], BR=[BR3, BR7]
+[2026-10-10T08:54:40.416Z] Precondition: A101 balance Rs.25000, A102 balance Rs.8000
+[2026-10-10T08:54:40.416Z] Input: {"from":"A101","to":"A102","amount":1500}
+[2026-10-10T08:54:40.885Z] RESULT T5: PASS. Actual: Txn TXN-20261010-1A6F8B status SUCCESS. A101 debited to 23500 (-1500), A102 credited to 9500 (+1500). 3 audit history rows recorded.
+[2026-10-10T08:54:40.885Z] 
 =================== RUNNING TEST T6: Authentication Failures & 3-PIN Session Lockout ===================
-[2026-10-10T08:51:25.564Z] Linked: FR=[FR4], BR=[BR5, BR6]
-[2026-10-10T08:51:25.564Z] Precondition: Customer C101 registered with PIN 1234
-[2026-10-10T08:51:25.564Z] Input: "Blank ID, 3-digit PIN, 3 consecutive wrong PINs"
-[2026-10-10T08:51:26.059Z] RESULT T6: PASS. Actual: 3 wrong PINs locked session with HTTP 423 SESSION_LOCKED; subsequent correct PIN rejected with HTTP 423
-[2026-10-10T08:51:26.059Z] 
+[2026-10-10T08:54:40.886Z] Linked: FR=[FR4], BR=[BR5, BR6]
+[2026-10-10T08:54:40.886Z] Precondition: Customer C101 registered with PIN 1234
+[2026-10-10T08:54:40.886Z] Input: "Blank ID, 3-digit PIN, 3 consecutive wrong PINs"
+[2026-10-10T08:54:41.435Z] RESULT T6: PASS. Actual: 3 wrong PINs locked session with HTTP 423 SESSION_LOCKED; subsequent correct PIN rejected with HTTP 423
+[2026-10-10T08:54:41.435Z] 
 =================== RUNNING TEST T7: Pre-Commit Failure Injection (Balance Depleted Before Complete) ===================
-[2026-10-10T08:51:26.059Z] Linked: FR=[FR4], BR=[BR2, BR6]
-[2026-10-10T08:51:26.059Z] Precondition: Transfer authorised; balance reduced directly in DB before complete
-[2026-10-10T08:51:26.059Z] Input: {"amount":1500,"balanceDrainTo":100}
-[2026-10-10T08:51:27.238Z] RESULT T7: PASS. Actual: Transaction transitioned to FAILED (reason: Source balance insufficient at commit: balance is Rs.100, required Rs.1500.); source balance stayed 100 with zero deduction
-[2026-10-10T08:51:27.238Z] 
+[2026-10-10T08:54:41.435Z] Linked: FR=[FR4], BR=[BR2, BR6]
+[2026-10-10T08:54:41.436Z] Precondition: Transfer authorised; balance reduced directly in DB before complete
+[2026-10-10T08:54:41.436Z] Input: {"amount":1500,"balanceDrainTo":100}
+[2026-10-10T08:54:41.910Z] RESULT T7: PASS. Actual: Transaction transitioned to FAILED (reason: Source balance insufficient at commit: balance is Rs.100, required Rs.1500.); source balance stayed 100 with zero deduction
+[2026-10-10T08:54:41.910Z] 
 =================== RUNNING TEST T8: Access Control & Data Isolation (BR10) ===================
-[2026-10-10T08:51:27.239Z] Linked: FR=[FR9], BR=[BR10]
-[2026-10-10T08:51:27.239Z] Precondition: C101 creates a transaction; C102 logs in
-[2026-10-10T08:51:27.239Z] Input: "C102 reads/reverses C101 txn; C101 accesses /api/admin/audit"
-[2026-10-10T08:51:28.379Z] RESULT T8: PASS. Actual: All unauthorized actions returned HTTP 403 FORBIDDEN with zero state modification
-[2026-10-10T08:51:28.380Z] 
+[2026-10-10T08:54:41.910Z] Linked: FR=[FR9], BR=[BR10]
+[2026-10-10T08:54:41.910Z] Precondition: C101 creates a transaction; C102 logs in
+[2026-10-10T08:54:41.910Z] Input: "C102 reads/reverses C101 txn; C101 accesses /api/admin/audit"
+[2026-10-10T08:54:42.364Z] RESULT T8: PASS. Actual: All unauthorized actions returned HTTP 403 FORBIDDEN with zero state modification
+[2026-10-10T08:54:42.364Z] 
 =================== RUNNING TEST T9: Admin Status Transition Matrix & Illegal Transition Rejections ===================
-[2026-10-10T08:51:28.380Z] Linked: FR=[FR7, FR9], BR=[BR8, BR10]
-[2026-10-10T08:51:28.380Z] Precondition: Transactions in INITIATED, AUTHORISED, FAILED states
-[2026-10-10T08:51:28.380Z] Input: "Admin attempts INITIATED->SUCCESS, FAILED->SUCCESS; Customer complete-before-authorise"
-[2026-10-10T08:51:28.836Z] RESULT T9: PASS. Actual: Complete-before-authorise rejected with 409; Admin INITIATED->SUCCESS rejected with 409 INVALID_STATUS_ACTION
-[2026-10-10T08:51:28.836Z] 
+[2026-10-10T08:54:42.365Z] Linked: FR=[FR7, FR9], BR=[BR8, BR10]
+[2026-10-10T08:54:42.365Z] Precondition: Transactions in INITIATED, AUTHORISED, FAILED states
+[2026-10-10T08:54:42.366Z] Input: "Admin attempts INITIATED->SUCCESS, FAILED->SUCCESS; Customer complete-before-authorise"
+[2026-10-10T08:54:42.851Z] RESULT T9: PASS. Actual: Complete-before-authorise rejected with 409; Admin INITIATED->SUCCESS rejected with 409 INVALID_STATUS_ACTION
+[2026-10-10T08:54:42.852Z] 
 =================== RUNNING TEST T10: Reversal Once-Only and Exact Balance Restoration (BR9) ===================
-[2026-10-10T08:51:28.836Z] Linked: FR=[FR8], BR=[BR9]
-[2026-10-10T08:51:28.836Z] Precondition: A101 sends Rs.500 to A102 (total debit 510); txn is SUCCESS
-[2026-10-10T08:51:28.836Z] Input: "1st reverse call -> REVERSED; 2nd reverse call -> 409"
-[2026-10-10T08:51:29.249Z] RESULT T10: PASS. Actual: 1st reversal restored A101 to 25000 and A102 to 8000; 2nd reversal rejected with HTTP 409 INVALID_STATUS_ACTION
-[2026-10-10T08:51:29.249Z] 
+[2026-10-10T08:54:42.852Z] Linked: FR=[FR8], BR=[BR9]
+[2026-10-10T08:54:42.852Z] Precondition: A101 sends Rs.500 to A102 (total debit 510); txn is SUCCESS
+[2026-10-10T08:54:42.853Z] Input: "1st reverse call -> REVERSED; 2nd reverse call -> 409"
+[2026-10-10T08:54:43.334Z] RESULT T10: PASS. Actual: 1st reversal restored A101 to 25000 and A102 to 8000; 2nd reversal rejected with HTTP 409 INVALID_STATUS_ACTION
+[2026-10-10T08:54:43.335Z] 
 =================== RUNNING TEST T11: Process Restart Persistence (NFR Persistence) ===================
-[2026-10-10T08:51:29.249Z] Linked: FR=[FR10], BR=[NFR Persistence]
-[2026-10-10T08:51:29.250Z] Precondition: Child process running on test DB; transaction completed
-[2026-10-10T08:51:29.250Z] Input: "Kill process; spawn new process on same DB; query record & balances"
-[2026-10-10T08:51:32.006Z] RESULT T11: PASS. Actual: Server restarted on D:\SE SAT II\backend\data\restart-test.db; verified txn TXN-20261010-C7CAAF is SUCCESS, A101 balance persists at 23500
-[2026-10-10T08:51:32.007Z] 
+[2026-10-10T08:54:43.335Z] Linked: FR=[FR10], BR=[NFR Persistence]
+[2026-10-10T08:54:43.335Z] Precondition: Child process running on test DB; transaction completed
+[2026-10-10T08:54:43.335Z] Input: "Kill process; spawn new process on same DB; query record & balances"
+[2026-10-10T08:54:45.930Z] RESULT T11: PASS. Actual: Server restarted on D:\SE SAT II\backend\data\restart-test.db; verified txn TXN-20261010-2EB593 is SUCCESS, A101 balance persists at 23500
+[2026-10-10T08:54:45.930Z] 
 =================== RUNNING TEST T12: Snapshot Immutability Against Master Data & Config Changes ===================
-[2026-10-10T08:51:32.007Z] Linked: FR=[FR5], BR=[BR3]
-[2026-10-10T08:51:32.007Z] Precondition: Transaction completed; service_config and beneficiary user name subsequently altered
-[2026-10-10T08:51:32.007Z] Input: "Altered low_charge=99, changed beneficiary user name=\"Modified Name\""
-[2026-10-10T08:51:33.584Z] RESULT T12: PASS. Actual: Transaction snapshot retained original charge (10), snapshot name ("Sample Customer 2"), and rule snapshot regardless of master modifications
-[2026-10-10T08:51:33.584Z] 
+[2026-10-10T08:54:45.931Z] Linked: FR=[FR5], BR=[BR3]
+[2026-10-10T08:54:45.931Z] Precondition: Transaction completed; service_config and beneficiary user name subsequently altered
+[2026-10-10T08:54:45.931Z] Input: "Altered low_charge=99, changed beneficiary user name=\"Modified Name\""
+[2026-10-10T08:54:46.422Z] RESULT T12: PASS. Actual: Transaction snapshot retained original charge (10), snapshot name ("Sample Customer 2"), and rule snapshot regardless of master modifications
+[2026-10-10T08:54:46.423Z] 
 =================== RUNNING TEST E1: Atomicity Fault-Injection (Rollback on Mid-Transaction Failure) ===================
-[2026-10-10T08:51:33.584Z] Linked: FR=[FR5], BR=[BR6, BR7]
-[2026-10-10T08:51:33.584Z] Precondition: Force simulated exception during DB transaction after debit step
-[2026-10-10T08:51:33.584Z] Input: "Simulated fault in SQLite transaction block"
-[2026-10-10T08:51:34.552Z] RESULT E1: PASS. Actual: Fault injection triggered clean rollback: A101 balance remained intact at 25000
-[2026-10-10T08:51:34.552Z] 
+[2026-10-10T08:54:46.423Z] Linked: FR=[FR5], BR=[BR6, BR7]
+[2026-10-10T08:54:46.423Z] Precondition: Force simulated exception during DB transaction after debit step
+[2026-10-10T08:54:46.423Z] Input: "Simulated fault in SQLite transaction block"
+[2026-10-10T08:54:46.696Z] RESULT E1: PASS. Actual: Fault injection triggered clean rollback: A101 balance remained intact at 25000
+[2026-10-10T08:54:46.696Z] 
 =================== RUNNING TEST E2: Strict Non-Numeric / String / NaN Amount Rejection ===================
-[2026-10-10T08:51:34.552Z] Linked: FR=[FR2], BR=[BR1]
-[2026-10-10T08:51:34.552Z] Precondition: Logged-in user
-[2026-10-10T08:51:34.552Z] Input: ["\"500\"","NaN",null,null]
-[2026-10-10T08:51:35.822Z] RESULT E2: PASS. Actual: All string/null/undefined amounts rejected with HTTP 400 VALIDATION_ERROR
-[2026-10-10T08:51:35.822Z] 
+[2026-10-10T08:54:46.696Z] Linked: FR=[FR2], BR=[BR1]
+[2026-10-10T08:54:46.696Z] Precondition: Logged-in user
+[2026-10-10T08:54:46.696Z] Input: ["\"500\"","NaN",null,null]
+[2026-10-10T08:54:47.051Z] RESULT E2: PASS. Actual: All string/null/undefined amounts rejected with HTTP 400 VALIDATION_ERROR
+[2026-10-10T08:54:47.052Z] 
 =================== RUNNING TEST E3: SQL Injection Immunity in Account Identifier ===================
-[2026-10-10T08:51:35.823Z] Linked: FR=[FR9], BR=[Security NFR]
-[2026-10-10T08:51:35.823Z] Precondition: Logged-in user sends SQL injection payload
-[2026-10-10T08:51:35.823Z] Input: {"beneficiaryAccountId":"A102' OR '1'='1","amount":500}
-[2026-10-10T08:51:37.083Z] RESULT E3: PASS. Actual: Parameterized query safely handled injection string, returning HTTP 404 NOT_FOUND
-[2026-10-10T08:51:37.083Z] 
+[2026-10-10T08:54:47.052Z] Linked: FR=[FR9], BR=[Security NFR]
+[2026-10-10T08:54:47.052Z] Precondition: Logged-in user sends SQL injection payload
+[2026-10-10T08:54:47.052Z] Input: {"beneficiaryAccountId":"A102' OR '1'='1","amount":500}
+[2026-10-10T08:54:47.390Z] RESULT E3: PASS. Actual: Parameterized query safely handled injection string, returning HTTP 404 NOT_FOUND
+[2026-10-10T08:54:47.390Z] 
 =================== RUNNING TEST E4: Customer Transaction Privacy Isolation ===================
-[2026-10-10T08:51:37.083Z] Linked: FR=[FR9], BR=[BR10]
-[2026-10-10T08:51:37.083Z] Precondition: C101 and C102 both have transactions
-[2026-10-10T08:51:37.083Z] Input: "C102 fetches /api/transfers/mine"
-[2026-10-10T08:51:38.639Z] RESULT E4: PASS. Actual: C102 saw strictly 1 transaction owned by U2; zero leak of U1 records
+[2026-10-10T08:54:47.390Z] Linked: FR=[FR9], BR=[BR10]
+[2026-10-10T08:54:47.390Z] Precondition: C101 and C102 both have transactions
+[2026-10-10T08:54:47.391Z] Input: "C102 fetches /api/transfers/mine"
+[2026-10-10T08:54:47.851Z] RESULT E4: PASS. Actual: C102 saw strictly 1 transaction owned by U2; zero leak of U1 records
