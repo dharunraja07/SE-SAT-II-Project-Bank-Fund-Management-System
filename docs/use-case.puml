@@ -1,0 +1,37 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor Customer
+actor Administrator
+
+rectangle "Bank Fund Transfer System" {
+  usecase "Login & Session Management" as UC_Login
+  usecase "Initiate Transfer" as UC_Initiate
+  usecase "Validate Amount & Eligibility" as UC_Validate
+  usecase "View Service Charge & Total" as UC_Charge
+  usecase "Authorise Transfer (PIN)" as UC_Authorise
+  usecase "Complete Transaction (Atomic Commit)" as UC_Complete
+  usecase "View Own History & Details" as UC_History
+  usecase "Reverse Eligible Transaction" as UC_Reverse
+
+  usecase "View All System Transactions" as UC_AdminTxns
+  usecase "View Complete Audit History" as UC_AdminAudit
+  usecase "Perform Permitted Status Action (Reverse)" as UC_AdminAction
+
+  Customer --> UC_Login
+  Customer --> UC_Initiate
+  Customer --> UC_History
+  Customer --> UC_Reverse
+
+  UC_Initiate ..> UC_Validate : <<include>>
+  UC_Initiate ..> UC_Charge : <<include>>
+  UC_Initiate ..> UC_Authorise : <<include>>
+  UC_Authorise ..> UC_Complete : <<include>>
+
+  Administrator --> UC_Login
+  Administrator --> UC_AdminTxns
+  Administrator --> UC_AdminAudit
+  Administrator --> UC_AdminAction
+}
+@enduml

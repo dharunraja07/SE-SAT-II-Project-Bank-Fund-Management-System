@@ -1,0 +1,86 @@
+@startuml
+class User {
+  +String id
+  +String name
+  +String role
+  +String status
+  +String login_id
+  +String pin_hash
+  +String created_at
+}
+
+class Account {
+  +String id
+  +String owner_user_id
+  +String status
+  +Integer balance
+  +String created_at
+}
+
+class Transaction {
+  +Integer id
+  +String reference
+  +String idempotency_key
+  +String owner_user_id
+  +String source_account_id
+  +String beneficiary_account_id
+  +String beneficiary_name_snapshot
+  +Integer amount
+  +Integer charge
+  +Integer total_debit
+  +String charge_rule_snapshot
+  +String status
+  +String failure_reason
+  +String created_at
+  +String updated_at
+}
+
+class TransactionHistory {
+  +Integer id
+  +String reference_id
+  +String actor_id
+  +String old_status
+  +String new_status
+  +String event_at
+  +String note
+}
+
+class ServiceConfig {
+  +String key
+  +String value
+}
+
+class AuthenticationService {
+  +Map sessions
+  +Map clientLockouts
+  +login(credentials)
+  +logout(sessionId)
+  +verifyPinForAuthorise(sessionId, pin)
+  +isSessionLocked(clientKey)
+}
+
+class TransactionService {
+  +generateReference()
+  +validateAmount(amount)
+  +calculateCharge(amount)
+  +validateStatusTransition(current, target)
+  +initiateTransfer(user, payload)
+  +authoriseTransfer(user, ref, pin)
+  +completeTransfer(user, ref)
+  +reverseTransfer(actor, ref)
+  +getTransactionDetails(actor, ref)
+  +getAllTransactions(actor)
+}
+
+User "1" --> "*" Account : owns
+User "1" --> "*" Transaction : initiates
+Account "1" --> "*" Transaction : source
+Account "1" --> "*" Transaction : beneficiary
+Transaction "1" --> "*" TransactionHistory : logs
+
+AuthenticationService ..> User : authenticates
+TransactionService ..> Transaction : mutates
+TransactionService ..> Account : balances
+TransactionService ..> ServiceConfig : config
+TransactionService ..> TransactionHistory : records
+@enduml

@@ -1,0 +1,30 @@
+{
+  "name": "se-sat-ii",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node backend/tests/run-all-tests.js",
+    "seed": "node backend/scripts/seed.js",
+    "evidence:screenshots": "node scripts/capture-screenshots.js",
+    "report": "node scripts/generate-report.js",
+    "start": "node backend/src/server.js",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "uuid": "^14.0.3"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.0",
+    "supertest": "^7.3.1"
+  }
+}
